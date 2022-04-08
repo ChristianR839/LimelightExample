@@ -21,6 +21,7 @@ import frc.robot.commands.ShootHigh;
 import frc.robot.commands.ShootLow;
 import frc.robot.commands.TransportDown;
 import frc.robot.commands.TransportUp;
+import frc.robot.limelight.Limelight;
 // import frc.robot.commands.Auto.Autonomous;
 // import frc.robot.commands.Climber.ClimberDown;
 // import frc.robot.commands.Climber.ClimberUp;
@@ -47,6 +48,8 @@ public class RobotContainer {
   private final Shooter s_shooter                   = new Shooter();
   // private final LimelightSub s_limelight            = new LimelightSub();
 
+  private final Limelight limelight = new Limelight();
+
   // private final Climber s_climber                   = new Climber();
   // private double x = 0;
   
@@ -59,7 +62,7 @@ public class RobotContainer {
   private final Command c_transportDown      = new TransportDown(s_transport);
   // private final Command c_liftDown           = new LiftDown(s_lift);
   // private final Command c_liftUp             = new LiftUp(s_lift);
-  private final Command c_shootHigh          = new ShootHigh(s_shooter, s_transport);
+  private final Command c_shootHigh          = new ShootHigh(s_shooter, s_transport, limelight);
   private final Command c_shootLow           = new ShootLow(s_shooter, s_transport);
   // private final Command c_limelightTurn      = new LimelightCommand(s_driveTrain, s_limelight, x);
   // private final Command c_limelightMove      = new TurnForLimelight(s_driveTrain, x);

@@ -8,6 +8,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Shooter extends SubsystemBase {
@@ -29,6 +30,10 @@ public class Shooter extends SubsystemBase {
 
   public void setPower(double power) {
     SparkShoot.set(power);
+  }
+
+  public void updateRPMOut() {
+    SmartDashboard.putNumber("Shooter RPM", shootEncoder.getVelocity());
   }
 
   // True = High / False = Low

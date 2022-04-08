@@ -18,10 +18,10 @@ public class AimHorizontal extends CommandBase {
   private LimelightData data;
 
   /** Creates a new AimHorizontal. */
-  public AimHorizontal(DriveTrain drivetrain) {
+  public AimHorizontal(DriveTrain drivetrain, Limelight limelight) {
     this.drivetrain = drivetrain;
+    this.limelight = limelight;
     this.controller = new TurnInPlaceController(6, 10, 0.2, 0.35, 0.85); // NEEDS TUNING
-    this.limelight = new Limelight();
 
     addRequirements(drivetrain);
   }
@@ -33,7 +33,8 @@ public class AimHorizontal extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double mPower = controller.update(0, limelight.getLimeLightValues().x, Timer.getFPGATimestamp());
+    data = limelight.getLimeLightValues();
+    double mPower = controller.update(0, data.x, Timer.getFPGATimestamp());
     drivetrain.drive(mPower, -mPower);
   }
 
@@ -46,6 +47,9 @@ public class AimHorizontal extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    double current = data.x;
+    double high = current + controller.getAllowableError();
+    double low = current - controller.getAllowableError();
+    return (current >= low && current <= high);
   }
 }

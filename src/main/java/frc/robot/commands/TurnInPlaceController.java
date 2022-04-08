@@ -66,6 +66,10 @@ public class TurnInPlaceController {
         mMaxOutput = maxOutput;
     }
 
+    public double getAllowableError() {
+        return mAllowableError;
+    }
+
     /**
      * Calculate the output that should be used for the next iteration.
      *
