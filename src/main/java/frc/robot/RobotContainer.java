@@ -6,23 +6,18 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.subsystems.DriveTrain;
-// import frc.robot.subsystems.ExampleSubsystem;
-// import frc.robot.subsystems.Intake;
-// import frc.robot.subsystems.Lift;
-// import frc.robot.subsystems.LimelightSub;
-import frc.robot.subsystems.Shooter;
-import frc.robot.subsystems.Transport;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.drive.TankDrive;
 import frc.robot.commands.sequential.AimAndShootHigh;
-import frc.robot.commands.shooter.ShootHigh;
 import frc.robot.commands.shooter.ShootLow;
 import frc.robot.commands.transport.TransportDown;
 import frc.robot.commands.transport.TransportUp;
 import frc.robot.limelight.Limelight;
+import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.Transport;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -32,39 +27,17 @@ import frc.robot.limelight.Limelight;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  // private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final DriveTrain s_driveTrain             = new DriveTrain();
-  // private final Intake s_intake                     = new Intake();
   private final Transport s_transport               = new Transport();
-  // private final Lift s_lift                         = new Lift();
   private final Shooter s_shooter                   = new Shooter();
-  // private final LimelightSub s_limelight            = new LimelightSub();
 
   private final Limelight limelight = new Limelight();
 
-  // private final Climber s_climber                   = new Climber();
-  // private double x = 0;
-  
-
-  // private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
-  // private final Command Autonomous           = new Autonomous(s_driveTrain, s_transport, s_intake, s_shooter, s_lift, s_limelight, x);
-  // private final Command Autonomous2          = new Autonomous(s_driveTrain, s_transport, s_intake, s_shooter, s_lift, s_limelight, x);
-  // private final Command c_intake             = new IntakeCommand(s_intake, s_lift);
   private final Command c_transportUp        = new TransportUp(s_transport);
   private final Command c_transportDown      = new TransportDown(s_transport);
-  // private final Command c_liftDown           = new LiftDown(s_lift);
-  // private final Command c_liftUp             = new LiftUp(s_lift);
-  // private final Command c_shootHigh          = new ShootHigh(s_shooter, s_transport, limelight);
   private final Command c_shootLow           = new ShootLow(s_shooter, s_transport);
-  // private final Command c_limelightTurn      = new LimelightCommand(s_driveTrain, s_limelight, x);
-  // private final Command c_limelightMove      = new TurnForLimelight(s_driveTrain, x);
-  // private final Command c_climberUp          = new ClimberUp(s_climber);
-  // private final Command c_climberDown        = new ClimberDown(s_climber);
 
   private final SequentialCommandGroup c_aimAndShootHigh = new AimAndShootHigh(s_driveTrain, limelight, s_shooter, s_transport);
-
-  // private final Command c_limelightMove = new MoveForLimelight(distanceFromLimelightToGoalInches, s_driveTrain, left, right)
-
 
   public XboxController driveController = new XboxController(0);
   public XboxController accController   = new XboxController(1);
@@ -91,9 +64,7 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-
     s_driveTrain.setDefaultCommand(new TankDrive( () -> -driveController.getLeftY(), () -> -driveController.getRightY(), s_driveTrain));
-
     limelight.LEDMode(false);
 
     // Configure the button bindings
@@ -107,19 +78,10 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    // LBBtnD.whileHeld(c_intake);
-    // RedBtnD.whileHeld(c_limelightTurn);
-    // BluBtnD.whileHeld(c_limelightMove);
-
     GrnBtnA.whileHeld(c_transportUp);
     BluBtnA.whileHeld(c_transportDown);
-    // LBBtnA.whileHeld(c_intake);
     YelBtnA.whileHeld(c_aimAndShootHigh);
     RedBtnA.whileHeld(c_shootLow);
-    // StartBtnA.whileHeld(c_liftDown);
-    // SelectBtnA.whileHeld(c_liftUp);
-    // UpBtnA.whileHeld(c_climberUp);
-    // DwnBtnA.whileHeld(c_climberDown);
   }
 
   /**

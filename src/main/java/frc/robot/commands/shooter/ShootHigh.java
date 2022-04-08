@@ -4,13 +4,13 @@
 
 package frc.robot.commands.shooter;
 
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.InterpolatingTreeMap.InterpolatingDouble;
 import frc.robot.InterpolatingTreeMap.InterpolatingTreeMap;
 import frc.robot.limelight.Limelight;
 import frc.robot.limelight.LimelightData;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Transport;
-import edu.wpi.first.wpilibj2.command.CommandBase;
 
 
 public class ShootHigh extends CommandBase {
@@ -49,10 +49,9 @@ public class ShootHigh extends CommandBase {
   public void initialize() {
     createTreeMap();
     limelight.LEDMode(true);
-    s_shooter.setPower(getVelocityFromLimelight(limelight.getLimeLightValues().y)); // 0.85
+    data = limelight.getLimeLightValues();
+    s_shooter.setPower(getVelocityFromLimelight(data.y)); // 0.85
   }
-
-  // 0.85
   
   // Called every time the scheduler runs while the command is scheduled.
   @Override

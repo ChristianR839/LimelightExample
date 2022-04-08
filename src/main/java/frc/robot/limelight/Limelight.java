@@ -21,7 +21,7 @@ public class Limelight {
         m_pipeline = table.getEntry("pipeline");
 
         NetworkTableEntry ledMode = table.getEntry("ledMode");
-        ledMode.setNumber(false?0:1);
+        ledMode.setNumber(0);
     }
 
     public void LEDMode(boolean lightOn) {
