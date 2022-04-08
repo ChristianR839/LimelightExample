@@ -2,7 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands;
+package frc.robot.commands.drive;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -21,14 +21,16 @@ public class AimHorizontal extends CommandBase {
   public AimHorizontal(DriveTrain drivetrain, Limelight limelight) {
     this.drivetrain = drivetrain;
     this.limelight = limelight;
-    this.controller = new TurnInPlaceController(6, 10, 0.2, 0.35, 0.85); // NEEDS TUNING
+    this.controller = new TurnInPlaceController(0.014, 0, 0.2, 0.35, 0.85); // NEEDS TUNING
 
     addRequirements(drivetrain);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    limelight.LEDMode(true);
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
@@ -42,6 +44,7 @@ public class AimHorizontal extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     drivetrain.drive(0, 0);
+    limelight.LEDMode(false);
   }
 
   // Returns true when the command should end.

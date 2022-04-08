@@ -2,7 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands;
+package frc.robot.commands.shooter;
 
 import frc.robot.InterpolatingTreeMap.InterpolatingDouble;
 import frc.robot.InterpolatingTreeMap.InterpolatingTreeMap;
@@ -48,6 +48,7 @@ public class ShootHigh extends CommandBase {
   @Override
   public void initialize() {
     createTreeMap();
+    limelight.LEDMode(true);
     s_shooter.setPower(getVelocityFromLimelight(limelight.getLimeLightValues().y)); // 0.85
   }
 
@@ -72,6 +73,7 @@ public class ShootHigh extends CommandBase {
   public void end(boolean interrupted) {
     s_shooter.off();
     s_transport.setPower(0.0);
+    limelight.LEDMode(false);
   }
 
   // Returns true when the command should end.

@@ -14,23 +14,15 @@ import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Transport;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-// import frc.robot.commands.Limelight.*;
-// import frc.robot.commands.Other.ExampleCommand;
-import frc.robot.commands.ShootHigh;
-import frc.robot.commands.ShootLow;
-import frc.robot.commands.TransportDown;
-import frc.robot.commands.TransportUp;
+import frc.robot.commands.drive.TankDrive;
+import frc.robot.commands.sequential.AimAndShootHigh;
+import frc.robot.commands.shooter.ShootHigh;
+import frc.robot.commands.shooter.ShootLow;
+import frc.robot.commands.transport.TransportDown;
+import frc.robot.commands.transport.TransportUp;
 import frc.robot.limelight.Limelight;
-// import frc.robot.commands.Auto.Autonomous;
-// import frc.robot.commands.Climber.ClimberDown;
-// import frc.robot.commands.Climber.ClimberUp;
-import frc.robot.commands.TankDrive;
-// import frc.robot.commands.Intake.IntakeCommand;
-// import frc.robot.commands.Lift.LiftDown;
-// import frc.robot.commands.Lift.LiftUp;
-// import frc.robot.subsystems.Climber;
-// import frc.robot.commands.Auto.Autonomous2;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -62,12 +54,14 @@ public class RobotContainer {
   private final Command c_transportDown      = new TransportDown(s_transport);
   // private final Command c_liftDown           = new LiftDown(s_lift);
   // private final Command c_liftUp             = new LiftUp(s_lift);
-  private final Command c_shootHigh          = new ShootHigh(s_shooter, s_transport, limelight);
+  // private final Command c_shootHigh          = new ShootHigh(s_shooter, s_transport, limelight);
   private final Command c_shootLow           = new ShootLow(s_shooter, s_transport);
   // private final Command c_limelightTurn      = new LimelightCommand(s_driveTrain, s_limelight, x);
   // private final Command c_limelightMove      = new TurnForLimelight(s_driveTrain, x);
   // private final Command c_climberUp          = new ClimberUp(s_climber);
   // private final Command c_climberDown        = new ClimberDown(s_climber);
+
+  private final SequentialCommandGroup c_aimAndShootHigh = new AimAndShootHigh(s_driveTrain, limelight, s_shooter, s_transport);
 
   // private final Command c_limelightMove = new MoveForLimelight(distanceFromLimelightToGoalInches, s_driveTrain, left, right)
 
@@ -100,6 +94,8 @@ public class RobotContainer {
 
     s_driveTrain.setDefaultCommand(new TankDrive( () -> -driveController.getLeftY(), () -> -driveController.getRightY(), s_driveTrain));
 
+    limelight.LEDMode(false);
+
     // Configure the button bindings
     configureButtonBindings();
   }
@@ -118,7 +114,7 @@ public class RobotContainer {
     GrnBtnA.whileHeld(c_transportUp);
     BluBtnA.whileHeld(c_transportDown);
     // LBBtnA.whileHeld(c_intake);
-    YelBtnA.whileHeld(c_shootHigh);
+    YelBtnA.whileHeld(c_aimAndShootHigh);
     RedBtnA.whileHeld(c_shootLow);
     // StartBtnA.whileHeld(c_liftDown);
     // SelectBtnA.whileHeld(c_liftUp);

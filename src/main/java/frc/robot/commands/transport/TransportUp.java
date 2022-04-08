@@ -2,17 +2,17 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands;
+package frc.robot.commands.transport;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Transport;
 
-public class TransportDown extends CommandBase {
+public class TransportUp extends CommandBase {
 
   private final Transport s_transport;
 
-  /** Creates a new TransportDown. */
-  public TransportDown(Transport s_transport) {
+  /** Creates a new TransportUp. */
+  public TransportUp(Transport s_transport) {
     this.s_transport = s_transport;
 
     // Use addRequirements() here to declare subsystem dependencies.
@@ -22,7 +22,7 @@ public class TransportDown extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    s_transport.transportDown();
+    s_transport.transportUp();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
